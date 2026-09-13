@@ -254,7 +254,15 @@ EmuleProgramDescriptor build_emule_descriptor(Program& program, IDevice* device)
             kd.bindings.rta_names = k.get_runtime_arg_names();
             kd.bindings.crta_names = k.get_common_runtime_arg_names();
             k.process_dataflow_buffer_binding_handles(
-                [&kd](const std::string& name, uint16_t id, bool is_relay, uint8_t pipe) {
+                [&kd](
+                    const std::string& name,
+                    uint16_t id,
+                    bool is_relay,
+                    uint8_t pipe,
+                    uint8_t /*pap*/,
+                    uint8_t /*cap*/) {
+                    // Emule (WH/BH only) emits plain DFBBindingToken text itself; the access
+                    // patterns only matter to the Quasar JIT, so they are not forwarded.
                     kd.bindings.dfb.push_back(DfbBinding{name, id, is_relay, pipe});
                 });
             k.process_semaphore_binding_handles(

@@ -174,8 +174,12 @@ public:
     virtual void process_dataflow_buffer_binding_handles(
         std::function<
             // NOLINTNEXTLINE(performance-unnecessary-value-param)
-            void(const std::string& accessor_name, uint16_t logical_dfb_id, bool is_relay, uint8_t prefetcher_pipe_id)>)
-        const {}
+            void(const std::string& accessor_name,
+                 uint16_t logical_dfb_id,
+                 bool is_relay,
+                 uint8_t prefetcher_pipe_id,
+                 uint8_t pap,
+                 uint8_t cap)>) const {}
     virtual void process_semaphore_binding_handles(
         std::function<
             // NOLINTNEXTLINE(performance-unnecessary-value-param)

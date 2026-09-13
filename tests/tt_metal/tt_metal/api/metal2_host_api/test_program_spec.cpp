@@ -4412,7 +4412,7 @@ TEST_F(ProgramSpecTestGen1, CPU_GetTokenIfPresentPrUsageExampleJITSmoke) {
 void kernel_main() {
     DataflowBuffer dfb_normal(dfb::normal);
 
-    const DFBBindingToken* bias_token = dfb::get_token_if_present<"bias">();
+    const auto* bias_token = dfb::get_token_if_present<"bias">();
 
     std::optional<DataflowBuffer> dfb_bias;
     if (bias_token != nullptr) {

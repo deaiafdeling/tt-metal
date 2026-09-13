@@ -309,12 +309,16 @@ void Kernel::process_named_compile_time_args(
     callback(this->named_compile_time_args());
 }
 
-void Kernel::process_dataflow_buffer_binding_handles(
-    const std::function<void(
-        const std::string& accessor_name, uint16_t logical_dfb_id, bool is_relay, uint8_t prefetcher_pipe_id)> callback)
-    const {
+void Kernel::process_dataflow_buffer_binding_handles(const std::function<void(
+                                                         const std::string& accessor_name,
+                                                         uint16_t logical_dfb_id,
+                                                         bool is_relay,
+                                                         uint8_t prefetcher_pipe_id,
+                                                         uint8_t pap,
+                                                         uint8_t cap)> callback) const {
     for (const auto& [accessor_name, handle] : this->dataflow_buffer_binding_handles_) {
-        callback(accessor_name, handle.logical_dfb_id, handle.is_relay, handle.prefetcher_pipe_id);
+        callback(
+            accessor_name, handle.logical_dfb_id, handle.is_relay, handle.prefetcher_pipe_id, handle.pap, handle.cap);
     }
 }
 
@@ -580,6 +584,8 @@ uint64_t Kernel::compute_hash() const {
         hasher.update(static_cast<uint64_t>(it->second.logical_dfb_id));
         hasher.update(static_cast<uint64_t>(it->second.is_relay ? 1 : 0));
         hasher.update(static_cast<uint64_t>(it->second.prefetcher_pipe_id));
+        hasher.update(static_cast<uint64_t>(it->second.pap));
+        hasher.update(static_cast<uint64_t>(it->second.cap));
     }
     for (const auto& it : sorted_iters(this->semaphore_binding_handles_)) {
         hasher.update(it->first);
