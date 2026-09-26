@@ -260,11 +260,7 @@ EmuleProgramDescriptor build_emule_descriptor(Program& program, IDevice* device)
                     bool is_relay,
                     uint8_t pipe,
                     uint8_t /*pap*/,
-                    uint8_t /*cap*/) {
-                    // Emule (WH/BH only) emits plain DFBBindingToken text itself; the access
-                    // patterns only matter to the Quasar JIT, so they are not forwarded.
-                    kd.bindings.dfb.push_back(DfbBinding{name, id, is_relay, pipe});
-                });
+                    uint8_t /*cap*/) { kd.bindings.dfb.push_back(DfbBinding{name, id, is_relay, pipe}); });
             k.process_semaphore_binding_handles(
                 [&kd](const std::string& name, uint16_t id, auto scope, uint32_t harts) {
                     kd.bindings.sem.push_back(
